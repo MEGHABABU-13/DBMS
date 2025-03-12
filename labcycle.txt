@@ -1,0 +1,90 @@
+Create table department70(dept_id numeric primary key,dept_name varchar(20) not null,dept_location varchar(20));
+
+Create table employee70A(emp_id numeric primary key,emp_name varchar(20),emp_salary numeric(7,2)check(emp_salary>20000),emp_join_date DATE check (emp_join_date >= DATE '1998-06-01'),dept_id numeric,foreign key(dept_id) references department70(dept_id));
+
+
+CREATE TABLE support70 (s_id NUMERIC PRIMARY KEY,emp_id NUMERIC,dept_id NUMERIC,status VARCHAR(5) CHECK (status IN ('yes', 'no')),FOREIGN KEY (emp_id) REFERENCES employee70A(emp_id),FOREIGN KEY (dept_id) REFERENCES department70(dept_id)
+);
+
+
+DESC department70;
+DESC employee70A;
+DESC support70;
+
+
+ALTER table employee70A add emp_email varchar(100);
+
+DROP table support70;
+
+
+ALTER table employee70A modify emp_salary DECIMAL(12,2);
+
+
+INSERT INTO department70 VALUES (101, 'HR', 'KOCHI');
+INSERT INTO department70 VALUES (102, 'Finance', 'KOLLAM');
+INSERT INTO department70  VALUES (103, 'IT', 'ERNAKULAM');
+INSERT INTO department70  VALUES (104, 'Marketing', 'IDUKKI');
+INSERT INTO department70  VALUES (105, 'Sales', 'KTM');
+
+
+INSERT INTO employee70A VALUES(1,'John Doe',60000,To_Date('15-05-2025','DD-MM-YYYY'),101,'meg13@gmail.com');
+
+INSERT INTO employee70A VALUES(2,'Ann',80000,To_Date('20-05-2019','DD-MM-YYYY'),102,'ann@gmail.com');
+INSERT INTO employee70A VALUES(3,'Aby',40000,To_Date('04-11-2024','DD-MM-YYYY'),103,'aby@gmail.com');
+INSERT INTO employee70A VALUES(4,'Sara',55000,To_Date('13-10-2022','DD-MM-YYYY'),104,'sara@gmail.com');
+
+INSERT INTO employee70A VALUES(5,'Emy',80000,To_Date('19-01-2015','DD-MM-YYYY'),102,'emy@gmail.com');  
+INSERT INTO employee70A VALUES(6,'Sam',35000,To_Date('17-01-2024','DD-MM-YYYY'),101,'sam@gmail.com');  
+
+
+UPDATE employee70A SET emp_salary=emp_salary*1.10 WHERE emp_id=1;
+
+
+DELETE FROM employee70A WHERE emp_id=1;
+
+UPDATE employee70A SET emp_salary=emp_salary*1.10 WHERE dept_id=101 and emp_salary<50000;
+
+SELECT emp_id,emp_name,emp_salary FROM employee70A;
+
+SELECT emp_name,emp_salary,emp_join_date FROM employee70A WHERE emp_salary>50000; 
+
+SELECT * FROM employee70A ORDER BY emp_salary DESC;
+
+SELECT emp_name, emp_salary FROM employee70A WHERE emp_join_date > TO_DATE('01-01-2020', 'DD-MM-YYYY');
+
+SELECT emp_name FROM employee70A WHERE emp_name LIKE 'J%';
+
+SELECT emp_name FROM employee70A WHERE emp_name LIKE 'A%';
+
+SELECT emp_name,emp_salary FROM employee70A WHERE emp_salary BETWEEN 40000 AND 60000;
+
+SELECT dept_id, SUM(emp_salary) AS total_salary FROM employee70A GROUP BY dept_id;
+
+SELECT dept_id, AVG(emp_salary) AS  avg_salary FROM employee70A GROUP BY dept_id HAVING AVG(emp_salary)>60000;
+
+SELECT dept_id, COUNT(*) AS num_employees FROM employee70A WHERE emp_salary>50000 GROUP BY dept_id;
+
+
+INSERT INTO employee70A VALUES(8,'Zain',45000,To_Date('11-01-2014','DD-MM-YYYY'),101,'zain@gmail.com');  
+INSERT INTO employee70A VALUES(9,'keil',50000,To_Date('27-02-2022','DD-MM-YYYY'),101,'keil@gmail.com');  
+INSERT INTO employee70A VALUES(10,'Dan',35000,To_Date('17-01-2024','DD-MM-YYYY'),102,'dan@gmail.com');  
+INSERT INTO employee70A VALUES(11,'Lia',45000,To_Date('11-06-2020','DD-MM-YYYY'),102,'lia@gmail.com');  
+
+SELECT dept_id, COUNT(*) AS employee_count FROM employee70A GROUP BY dept_id HAVING COUNT(*) > 3;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

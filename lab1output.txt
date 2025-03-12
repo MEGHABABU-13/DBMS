@@ -1,0 +1,270 @@
+SQL> Create table department70(dept_id numeric primary key,dept_name varchar(20) not null,dept_location varchar(20));
+
+Table created.
+
+
+
+SQL> Create table employee70A(emp_id numeric primary key,emp_name varchar(20),emp_salary numeric(7,2)check(emp_salary>20000),emp_join_date DATE check (emp_join_date >= DATE '1998-06-01'),dept_id numeric,foreign key(dept_id) references department70(dept_id));
+
+Table created.
+
+
+
+SQL> CREATE TABLE support70 (s_id NUMERIC PRIMARY KEY,emp_id NUMERIC,dept_id NUMERIC,status VARCHAR(5) CHECK (status IN ('yes', 'no')),FOREIGN KEY (emp_id) REFERENCES employee70A(emp_id),FOREIGN KEY (dept_id) REFERENCES department70(dept_id)
+);  2  
+
+Table created.
+
+SQL> DESC department70;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID				   NOT NULL NUMBER(38)
+ DEPT_NAME				   NOT NULL VARCHAR2(20)
+ DEPT_LOCATION					    VARCHAR2(20)
+
+SQL> DESC employee70A;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID 				   NOT NULL NUMBER(38)
+ EMP_NAME					    VARCHAR2(20)
+ EMP_SALARY					    NUMBER(7,2)
+ EMP_JOIN_DATE					    DATE
+ DEPT_ID					    NUMBER(38)
+
+SQL> DESC support70;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ S_ID					   NOT NULL NUMBER(38)
+ EMP_ID 					    NUMBER(38)
+ DEPT_ID					    NUMBER(38)
+ STATUS 					    VARCHAR2(5)
+
+SQL> ALTER table employee70A add emp_email varchar(100);
+
+Table altered.
+
+
+SQL> DROP table support70;
+
+Table dropped.
+
+SQL> ALTER table employee70A modify emp_salary DECIMAL(12,2);
+
+Table altered.
+
+
+SQL> INSERT INTO department70 VALUES (101, 'HR', 'KOCHI');
+INSERT INTO department70 VALUES (102, 'Finance', 'KOLLAM');
+INSERT INTO department70  VALUES (103, 'IT', 'ERNAKULAM');
+INSERT INTO department70  VALUES (104, 'Marketing', 'IDUKKI');
+INSERT INTO department70  VALUES (105, 'Sales', 'KTM');
+1 row created.
+
+SQL> 
+1 row created.
+
+SQL> 
+1 row created.
+
+SQL> 
+1 row created.
+
+
+SQL> INSERT INTO employee70A VALUES(1,'John Doe',60000,To_Date('15-05-2025','DD-MM-YYYY'),101,'meg13@gmail.com');
+
+1 row created.
+
+
+SQL> select * from employee70A;
+
+    EMP_ID EMP_NAME		EMP_SALARY EMP_JOIN_	DEPT_ID EMP_EMAIL
+---------- -------------------- ---------- --------- ---------- ----------------------------------------------------------------------------------------------------
+	 1 John Doe		     60000 15-MAY-25	    101 meg13@gmail.com
+	 2 Ann			     80000 20-MAY-19	    102 ann@gmail.com
+	 3 Aby			     40000 04-NOV-24	    103 aby@gmail.com
+	 4 Sara 		     55000 13-OCT-22	    104 sara@gmail.com
+	 5 Emy			     65000 19-JAN-15	    102 emy@gmail.com
+     6 Sam			     35000 17-JAN-24	    101 sam@gmail.com
+
+
+
+SQL> select * from employee70A;
+
+    EMP_ID EMP_NAME		EMP_SALARY EMP_JOIN_	DEPT_ID EMP_EMAIL
+---------- -------------------- ---------- --------- ---------- ----------------------------------------------------------------------------------------------------
+	 1 John Doe		     66000 15-MAY-25	    101 meg13@gmail.com
+	 2 Ann			     80000 20-MAY-19	    102 ann@gmail.com
+	 3 Aby			     40000 04-NOV-24	    103 aby@gmail.com
+	 4 Sara 		     55000 13-OCT-22	    104 sara@gmail.com
+	 5 Emy			     65000 19-JAN-15	    102 emy@gmail.com
+	 6 Sam			     35000 17-JAN-24	    101 sam@gmail.com
+
+
+SQL> UPDATE employee70A SET emp_salary=emp_salary*1.10 WHERE emp_id=1;
+
+1 row updated.
+
+SQL> select * from employee70A;
+
+    EMP_ID EMP_NAME		EMP_SALARY EMP_JOIN_	DEPT_ID EMP_EMAIL
+---------- -------------------- ---------- --------- ---------- ----------------------------------------------------------------------------------------------------
+	 1 John Doe		     66000 15-MAY-25	    101 meg13@gmail.com
+	 2 Ann			     80000 20-MAY-19	    102 ann@gmail.com
+	 3 Aby			     40000 04-NOV-24	    103 aby@gmail.com
+	 4 Sara 		     55000 13-OCT-22	    104 sara@gmail.com
+	 5 Emy			     65000 19-JAN-15	    102 emy@gmail.com
+	 6 Sam			     35000 17-JAN-24	    101 sam@gmail.com
+
+
+SQL> DELETE FROM employee70A WHERE emp_id=1;
+
+
+1 row deleted.
+
+SQL> select * from employee70A; 
+
+    EMP_ID EMP_NAME		EMP_SALARY EMP_JOIN_	DEPT_ID EMP_EMAIL
+---------- -------------------- ---------- --------- ---------- ----------------------------------------------------------------------------------------------------
+	 2 Ann			     80000 20-MAY-19	    102 ann@gmail.com
+	 3 Aby			     40000 04-NOV-24	    103 aby@gmail.com
+	 4 Sara 		     55000 13-OCT-22	    104 sara@gmail.com
+	 5 Emy			     65000 19-JAN-15	    102 emy@gmail.com
+	 6 Sam			     35000 17-JAN-24	    101 sam@gmail.com
+
+SQL> UPDATE employee70A SET emp_salary=emp_salary*1.10 WHERE dept_id=101 and emp_salary<50000;
+
+1 row updated.
+
+SQL> select * from employee70A;
+
+    EMP_ID EMP_NAME		EMP_SALARY EMP_JOIN_	DEPT_ID EMP_EMAIL
+---------- -------------------- ---------- --------- ---------- ----------------------------------------------------------------------------------------------------
+	 2 Ann			     80000 20-MAY-19	    102 ann@gmail.com
+	 3 Aby			     40000 04-NOV-24	    103 aby@gmail.com
+	 4 Sara 		     55000 13-OCT-22	    104 sara@gmail.com
+	 5 Emy			     65000 19-JAN-15	    102 emy@gmail.com
+	 6 Sam			     38500 17-JAN-24	    101 sam@gmail.com
+
+SQL> SELECT emp_id,emp_name,emp_salary FROM employee70A;
+
+    EMP_ID EMP_NAME		EMP_SALARY
+---------- -------------------- ----------
+	 2 Ann			     80000
+	 3 Aby			     40000
+	 4 Sara 		     55000
+	 5 Emy			     65000
+	 6 Sam			     38500
+
+
+SQL> SELECT emp_name,emp_salary,emp_join_date FROM employee70A WHERE emp_salary>50000; 
+
+EMP_NAME	     EMP_SALARY EMP_JOIN_
+-------------------- ---------- ---------
+Ann			  80000         20-MAY-19
+Sara		  55000         13-OCT-22
+Emy			  65000         19-JAN-15
+
+
+SQL> SELECT * FROM employee70A ORDER BY emp_salary DESC;
+
+    EMP_ID EMP_NAME		EMP_SALARY EMP_JOIN_	DEPT_ID EMP_EMAIL
+---------- -------------------- ---------- --------- ---------- ----------------------------------------------------------------------------------------------------
+	 2 Ann			     80000 20-MAY-19	    102 ann@gmail.com
+	 5 Emy			     65000 19-JAN-15	    102 emy@gmail.com
+	 4 Sara 		     55000 13-OCT-22	    104 sara@gmail.com
+	 3 Aby			     40000 04-NOV-24	    103 aby@gmail.com
+	 6 Sam			     38500 17-JAN-24	    101 sam@gmail.com
+
+
+SQL> SELECT emp_name, emp_salary FROM employee70A WHERE emp_join_date > TO_DATE('01-01-2020', 'DD-MM-YYYY');
+
+EMP_NAME	     EMP_SALARY
+-------------------- ----------
+Aby			  40000
+Sara		  55000
+Sam			  38500
+
+
+
+SQL> SELECT emp_name FROM employee70A WHERE emp_name LIKE 'J%';
+
+no rows selected
+
+SQL> SELECT emp_name FROM employee70A WHERE emp_name LIKE 'A%';
+
+EMP_NAME
+--------------------
+Ann
+Aby
+
+
+SQL> SELECT emp_name,emp_salary FROM employee70A WHERE emp_salary BETWEEN 40000 AND 60000;
+SQL> 
+EMP_NAME	     EMP_SALARY
+-------------------- ----------
+Aby			      40000
+Sara			  55000
+
+SQL> SELECT dept_id, SUM(emp_salary) AS total_salary FROM employee70A GROUP BY dept_id;
+
+   DEPT_ID TOTAL_SALARY
+---------- ------------
+       104	  55000
+       103	  40000
+       101	  38500
+       102	 160000
+
+
+SQL> SELECT dept_id, AVG(emp_salary) AS  avg_salary FROM employee70A GROUP BY dept_id HAVING AVG(emp_salary)>60000;
+
+
+   DEPT_ID AVG_SALARY
+---------- ----------
+       102	72500
+
+SQL> SQL> SELECT dept_id, COUNT(*) AS num_employees FROM employee70A WHERE emp_salary>50000 GROUP BY dept_id;
+
+   DEPT_ID NUM_EMPLOYEES
+---------- -------------
+       104	       1
+       102	       2
+
+SQL> INSERT INTO employee70A VALUES(11,'Lia',45000,To_Date('11-06-2020','DD-MM-YYYY'),102,'lia@gmail.com'); 
+
+1 row created.
+
+SQL> SELECT * FROM employee70A;
+
+    EMP_ID EMP_NAME		EMP_SALARY EMP_JOIN_	DEPT_ID EMP_EMAIL
+---------- -------------------- ---------- --------- ---------- ----------------------------------------------------------------------------------------------------
+	 2 Ann			     80000 20-MAY-19	    102 ann@gmail.com
+	 3 Aby			     40000 04-NOV-24	    103 aby@gmail.com
+	 4 Sara 		     55000 13-OCT-22	    104 sara@gmail.com
+	 5 Emy			     80000 19-JAN-15	    102 emy@gmail.com
+	 6 Sam			     38500 17-JAN-24	    101 sam@gmail.com
+	 7 Adam 		     95000 16-OCT-21	    104 adam@gmail.com
+	 8 Jays 		     85000 15-JUL-20	    101 jay13@gmail.com
+	 9 keil 		     50000 27-FEB-22	    101 keil@gmail.com
+	10 Dan			     35000 17-JAN-24	    102 dan@gmail.com
+	11 Lia			     45000 11-JUN-20	    102 lia@gmail.com
+
+10 rows selected.
+
+
+SQL> SELECT dept_id, COUNT(*) AS employee_count FROM employee70A GROUP BY dept_id HAVING COUNT(*) > 3;
+
+   DEPT_ID EMPLOYEE_COUNT
+---------- --------------
+       102		4
+
+
+
+
+
+
+
+
+
+
+
+
