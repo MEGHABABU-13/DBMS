@@ -1,0 +1,18 @@
+SELECT emp_name FROM employee70A WHERE emp_salary > (SELECT AVG(emp_salary)FROM employee70A WHERE dept_id =employee70A.dept_id);
+
+SELECT emp_name,emp_salary FROM employee70A WHERE dept_id IN (SELECT dept_id FROM department70 WHERE dept_location='ERNAKULAM');
+
+
+INSERT INTO employee70A VALUES(7,'Adam',95000,To_Date('16-10-2021','DD-MM-YYYY'),104,'adam@gmail.com');
+INSERT INTO employee70A VALUES(8,'Jays',85000,To_Date('15-07-2020','DD-MM-YYYY'),101,'jay13@gmail.com');
+
+
+SELECT emp_name FROM employee70A WHERE emp_salary >(SELECT MAX(emp_salary)FROM employee70A WHERE dept_id=102);
+
+
+SELECT dept_name FROM department70 WHERE dept_id = (SELECT dept_id FROM employee70A GROUP BY dept_id HAVING SUM(emp_salary) = (SELECT MAX(total_salary) FROM (SELECT SUM(emp_salary) AS total_salary FROM employee70A GROUP BY dept_id)));
+
+
+ SELECT emp_id,emp_name FROM employee70A WHERE dept_id IN(SELECT dept_id FROM employee70A GROUP BY dept_id HAVING COUNT(*)<10);
+
+
