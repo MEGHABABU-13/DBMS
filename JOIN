@@ -1,0 +1,92 @@
+Q38: Write an INNER JOIN query to list employee names and their corresponding
+department names.
+
+SQL> SELECT employee70A.emp_name,department70.dept_name FROM employee70A INNER JOIN department70 ON employee70A.dept_id=department70.dept_id;
+
+EMP_NAME	     DEPT_NAME
+-------------------- --------------------
+Ann		     Finance
+Aby		     IT
+Sara		     Marketing
+Emy		     Finance
+Sam		     HR
+Zain		     HR
+keil		     HR
+Dan		     Finance
+Lia		     Finance
+
+9 rows selected.
+
+Q39: Use a LEFT JOIN to list all employees and their department names, including those
+who do not belong to any department.
+
+SELECT e.emp_name,d.dept_name FROM employee70A e LEFT JOIN department70 d ON e.dept_id=d.dept_id;
+
+EMP_NAME	     DEPT_NAME
+-------------------- --------------------
+Sam		     HR
+Zain		     HR
+keil		     HR
+Ann		     Finance
+Emy		     Finance
+Dan		     Finance
+Lia		     Finance
+Aby		     IT
+Sara		     Marketing
+
+9 rows selected.
+
+Q40: Write a RIGHT JOIN to list all departments and their corresponding employees,
+including departments with no employees.
+
+INSERT INTO department70  VALUES (106, 'Insurance', 'PALAKKAD');
+
+SQL> select * from department70;
+
+   DEPT_ID DEPT_NAME		DEPT_LOCATION
+---------- -------------------- --------------------
+       101 HR			KOCHI
+       102 Finance		KOLLAM
+       103 IT			ERNAKULAM
+       104 Marketing		IDUKKI
+       105 Sales		KTM
+       106 Insurance		PALAKKAD
+
+SQL> SELECT employee70A.emp_id, employee70A.emp_name, department70.dept_id, department70.dept_name FROM employee70A RIGHT JOIN department70 ON employee70A.dept_id = department70.dept_id;
+
+    EMP_ID EMP_NAME		   DEPT_ID DEPT_NAME
+---------- -------------------- ---------- --------------------
+	 2 Ann			       102 Finance
+	 3 Aby			       103 IT
+	 4 Sara 		       104 Marketing
+	 5 Emy			       102 Finance
+	 6 Sam			       101 HR
+	 8 Zain 		       101 HR
+	 9 keil 		       101 HR
+	10 Dan			       102 Finance
+	11 Lia			       102 Finance
+				       105 Sales
+				       106 Insurance
+
+
+
+Q41: Use an OUTER JOIN to list all employees and their department names, showing NULL
+if there is no corresponding department.
+
+SQL> SELECT e.emp_name,d.dept_name FROM employee70A e LEFT OUTER JOIN department70 d ON e.dept_id = d.dept_id;
+
+INSERT INTO employee70A VALUES(15,'Uma',60000,To_Date('15-05-2007','DD-MM-YYYY'),NULL,'uma89@gmail.com');
+
+EMP_NAME	     DEPT_NAME
+-------------------- --------------------
+Sam		     HR
+Zain		     HR
+keil		     HR
+Ann		     Finance
+Emy		     Finance
+Dan		     Finance
+Lia		     Finance
+Aby		     IT
+Sara		     Marketing
+Uma
+
