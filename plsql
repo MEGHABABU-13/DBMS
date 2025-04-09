@@ -193,5 +193,118 @@ Numbers are :
 
 PL/SQL procedure successfully completed.
 
+p5)
+Accept sname prompt 'Enter name:';
+Accept num prompt 'Enter roll no:';
+Accept m1 prompt 'Enter mark for physics:';
+Accept m2 prompt 'Enter mark for chemistry:';
+Accept m3 prompt 'Enter mark for maths:';
+Accept m4 prompt 'Enter mark for hindi:';
+DECLARE
+	name varchar(10);
+	roll_no number(2);
+	mark1 number;
+	mark2 number;
+	mark3 number;
+	mark4 number;
+	total number;
+	percentage number(8,2);
+BEGIN
+	name:='&sname';
+	roll_no:=&num;
+	mark1:=&m1;
+	mark2:=&m2;
+	mark3:=&m3;
+	mark4:=&m4;
+	total:=mark1+mark2+mark3+mark4;
+	percentage:=total/4;
+	dbms_output.put_line('The total mark of '||name);
+	dbms_output.put_line('Total :'||total);
+	dbms_output.put_line('percentage: '||percentage);
+END;
+/
+output
+developer@ccfl3-pc10:~/Megha$ sqlplus mca70/mca70@172.16.50.33/FISAT
+
+SQL*Plus: Release 23.0.0.0.0 - Production on Wed Apr 9 15:10:15 2025
+Version 23.4.0.24.05
+
+Copyright (c) 1982, 2024, Oracle.  All rights reserved.
+
+Last Successful login time: Wed Apr 09 2025 15:08:08 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.9.1.0.0
+
+SQL> set serveroutput on
+SQL> @mark.sql
+Enter name:RON
+Enter roll no:8
+Enter mark for physics:68
+Enter mark for chemistry:97
+Enter mark for maths:88
+Enter mark for hindi:69
+old  11: 	name:='&sname';
+new  11: 	name:='RON';
+old  12: 	roll_no:=&num;
+new  12: 	roll_no:=8;
+old  13: 	mark1:=&m1;
+new  13: 	mark1:=68;
+old  14: 	mark2:=&m2;
+new  14: 	mark2:=97;
+old  15: 	mark3:=&m3;
+new  15: 	mark3:=88;
+old  16: 	mark4:=&m4;
+new  16: 	mark4:=69;
+The total mark of RON
+Total :322
+percentage: 80.5
+
+PL/SQL procedure successfully completed.
+
+
+
+p6)
+DECLARE
+	max_salary number(8,2);
+BEGIN
+	SELECT max(emp_salary) into max_salary from employee70A;
+	dbms_output.put_line('Maximum salary:'||max_salary);
+END;
+/
+
+output
+SQL> @maxsal.sql
+Maximum salary:80000
+
+PL/SQL procedure successfully completed.
+
+
+p7)
+DECLARE
+	max_salary number(8,2);
+	empname employee70A.emp_name%type;
+	deptid employee70A.dept_id%type;
+BEGIN
+	select max(emp_salary) into max_salary from employee70A;
+	dbms_output.put_line('Highest salary:'||max_salary);
+	select emp_name,dept_id into empname,deptid from employee70A where emp_salary=max_salary;
+	dbms_output.put_line('Employee '||empname);
+	dbms_output.put_line('Department id:'||deptid);
+	
+END;
+/
+
+output
+SQL> @empsal.sql
+Highest salary:80000
+Employee Emy
+Department id:102
+
+PL/SQL procedure successfully completed.
+
+
+
 
 
