@@ -1,0 +1,204 @@
+2. Create a collection student consists of details like rollno, name, phoneno, marks, city,
+year of course, score.
+
+> db.createCollection("Student70A")
+{ "ok" : 1 }
+
+> show dbs
+MCA118    0.000GB
+MCA28     0.000GB
+MCA30     0.000GB
+MCA41     0.000GB
+MCA42     0.000GB
+admin     0.000GB
+config    0.000GB
+data2     0.000GB
+db        0.000GB
+local     0.000GB
+mca02     0.000GB
+mca05     0.000GB
+mca08     0.000GB
+mca1      0.000GB
+mca100    0.000GB
+mca103    0.000GB
+mca104    0.000GB
+mca105    0.000GB
+mca106    0.000GB
+mca111    0.000GB
+mca112    0.000GB
+mca114    0.000GB
+mca116    0.000GB
+mca119    0.000GB
+mca14     0.000GB
+mca15     0.000GB
+mca16     0.000GB
+mca17     0.000GB
+mca2      0.000GB
+mca20     0.000GB
+mca21     0.000GB
+mca32     0.000GB
+mca33     0.000GB
+mca35     0.000GB
+mca38     0.000GB
+mca47     0.000GB
+mca49     0.000GB
+mca5      0.000GB
+mca54     0.000GB
+mca57     0.000GB
+mca6      0.000GB
+mca61     0.000GB
+mca63     0.000GB
+mca64     0.000GB
+mca70     0.000GB
+mca71     0.000GB
+mca72     0.000GB
+mca73     0.000GB
+mca79     0.000GB
+mca82     0.000GB
+mca83     0.000GB
+mca84     0.000GB
+mca85     0.000GB
+mca86     0.000GB
+mca87     0.000GB
+mca89     0.000GB
+mca96     0.000GB
+mca97     0.000GB
+razi      0.000GB
+shimongo  0.000GB
+student   0.000GB
+test1     0.000GB
+
+
+3. Insert the details of the multiple students (atleast 5) in the form of documents in the
+student collection.
+
+> db.Student70A.insertMany([{roll:1,name:"Alice",phoneno:"8234563789",city:"Tvm",year_of_course:2024,score:89},
+... {roll:2,name:"Sarayu",phoneno:"9745367120",city:"Kannur",year_of_course:2019,score:97},
+... {roll:3,name:"Sujith",phoneno:"7689034511",city:"Kollam",year_of_course:2023,score:90},
+... {roll:4,name:"Emi",phoneno:"8080923354",city:"Thrissur",year_of_course:2024,score:98},
+... {roll:5,name:"Abel",phoneno:"6678540987",city:"Ekm",year_of_course:2021,score:79}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("68185fb5f5589ca27ca25227"),
+		ObjectId("68185fb5f5589ca27ca25228"),
+		ObjectId("68185fb5f5589ca27ca25229"),
+		ObjectId("68185fb5f5589ca27ca2522a"),
+		ObjectId("68185fb5f5589ca27ca2522b")
+	]
+}
+
+> db.Student70A.find()
+{ "_id" : ObjectId("68185fb5f5589ca27ca25227"), "roll" : 1, "name" : "Alice", "phoneno" : "8234563789", "city" : "Tvm", "year_of_course" : 2024, "score" : 89 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25228"), "roll" : 2, "name" : "Sarayu", "phoneno" : "9745367120", "city" : "Kannur", "year_of_course" : 2019, "score" : 97 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25229"), "roll" : 3, "name" : "Sujith", "phoneno" : "7689034511", "city" : "Kollam", "year_of_course" : 2023, "score" : 90 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522a"), "roll" : 4, "name" : "Emi", "phoneno" : "8080923354", "city" : "Thrissur", "year_of_course" : 2024, "score" : 98 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522b"), "roll" : 5, "name" : "Abel", "phoneno" : "6678540987", "city" : "Ekm", "year_of_course" : 2021, "score" : 79 }
+> 
+
+
+4. Retrieve the fields rollno, name, phoneno, marks, city for all the documents in the
+collection student.
+> db.Student70A.find({},{roll:1,name:1,phoneno:1,city:1,score:1})
+{ "_id" : ObjectId("68185fb5f5589ca27ca25227"), "roll" : 1, "name" : "Alice", "phoneno" : "8234563789", "city" : "Tvm", "score" : 89 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25228"), "roll" : 2, "name" : "Sarayu", "phoneno" : "9745367120", "city" : "Kannur", "score" : 97 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25229"), "roll" : 3, "name" : "Sujith", "phoneno" : "7689034511", "city" : "Kollam", "score" : 90 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522a"), "roll" : 4, "name" : "Emi", "phoneno" : "8080923354", "city" : "Thrissur", "score" : 98 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522b"), "roll" : 5, "name" : "Abel", "phoneno" : "6678540987", "city" : "Ekm", "score" : 79 }
+
+
+
+5. Display the details of students who achieved a score more than 90 and are from
+‘Thrissur’.
+
+> db.Student70A.find({score:{$gt:90},city:"Thrissur"})
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522a"), "roll" : 4, "name" : "Emi", "phoneno" : "8080923354", "city" : "Thrissur", "year_of_course" : 2024, "score" : 98 }
+
+6. Update the phone number of Sujith in the student collection. Retrieve the updated
+information.
+
+> db.Student70A.updateOne({name:"Sujith"},{$set:{phoneno:"9091936654"}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.Student70A.find({name:"Sujith"})
+{ "_id" : ObjectId("68185fb5f5589ca27ca25229"), "roll" : 3, "name" : "Sujith", "phoneno" : "9091936654", "city" : "Kollam", "year_of_course" : 2023, "score" : 90 }
+> 
+
+7. Update the year of course in all the documents in the student collection to 2021. Also
+retrieve the updated information.
+
+> db.Student70A.updateMany({},{$set:{year_of_course:2021}})
+{ "acknowledged" : true, "matchedCount" : 5, "modifiedCount" : 4 }
+
+> db.Student70A.find()
+{ "_id" : ObjectId("68185fb5f5589ca27ca25227"), "roll" : 1, "name" : "Alice", "phoneno" : "8234563789", "city" : "Tvm", "year_of_course" : 2021, "score" : 89 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25228"), "roll" : 2, "name" : "Sarayu", "phoneno" : "9745367120", "city" : "Kannur", "year_of_course" : 2021, "score" : 97 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25229"), "roll" : 3, "name" : "Sujith", "phoneno" : "9091936654", "city" : "Kollam", "year_of_course" : 2021, "score" : 90 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522a"), "roll" : 4, "name" : "Emi", "phoneno" : "8080923354", "city" : "Thrissur", "year_of_course" : 2021, "score" : 98 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522b"), "roll" : 5, "name" : "Abel", "phoneno" : "6678540987", "city" : "Ekm", "year_of_course" : 2021, "score" : 79 }
+
+
+8. Display the city of ‘Sarayu’.
+
+> db.Student70A.find({name:"Sarayu"},{name:1,city:1})
+{ "_id" : ObjectId("68185fb5f5589ca27ca25228"), "name" : "Sarayu", "city" : "Kannur" }
+
+
+9. Retrieve the number of students who joined after May 2020 from the collection.
+
+> db.Student70A.find({year_of_course:{$gt:2020}}).count()
+5
+
+10. Arrange the name of the students in ascending order along with all the columns.
+>  db.Student70A.find().sort({ name:1});
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522b"), "roll" : 5, "name" : "Abel", "phoneno" : "6678540987", "city" : "Ekm", "year_of_course" : 2021, "score" : 79 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25227"), "roll" : 1, "name" : "Alice", "phoneno" : "8234563789", "city" : "Tvm", "year_of_course" : 2021, "score" : 89 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522a"), "roll" : 4, "name" : "Emi", "phoneno" : "8080923354", "city" : "Thrissur", "year_of_course" : 2021, "score" : 98 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25228"), "roll" : 2, "name" : "Sarayu", "phoneno" : "9745367120", "city" : "Kannur", "year_of_course" : 2021, "score" : 97 }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25229"), "roll" : 3, "name" : "Sujith", "phoneno" : "9091936654", "city" : "Kollam", "year_of_course" : 2021, "score" : 90 }
+
+11. Rename attribute city as town.
+
+> db.Student70A.updateMany({},{$rename:{"city":"town"}})
+{ "acknowledged" : true, "matchedCount" : 5, "modifiedCount" : 5 }
+> db.Student70A.find()
+{ "_id" : ObjectId("68185fb5f5589ca27ca25227"), "roll" : 1, "name" : "Alice", "phoneno" : "8234563789", "year_of_course" : 2021, "score" : 89, "town" : "Tvm" }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25228"), "roll" : 2, "name" : "Sarayu", "phoneno" : "9745367120", "year_of_course" : 2021, "score" : 97, "town" : "Kannur" }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25229"), "roll" : 3, "name" : "Sujith", "phoneno" : "9091936654", "year_of_course" : 2021, "score" : 90, "town" : "Kollam" }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522a"), "roll" : 4, "name" : "Emi", "phoneno" : "8080923354", "year_of_course" : 2021, "score" : 98, "town" : "Thrissur" }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522b"), "roll" : 5, "name" : "Abel", "phoneno" : "6678540987", "year_of_course" : 2021, "score" : 79, "town" : "Ekm" }
+
+
+12. Delete the details of the student whose name is ‘Sujith’ from the student collection
+
+> db.Student70A.deleteOne({name:"Sujith"})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.Student70A.find()
+{ "_id" : ObjectId("68185fb5f5589ca27ca25227"), "roll" : 1, "name" : "Alice", "phoneno" : "8234563789", "year_of_course" : 2021, "score" : 89, "town" : "Tvm" }
+{ "_id" : ObjectId("68185fb5f5589ca27ca25228"), "roll" : 2, "name" : "Sarayu", "phoneno" : "9745367120", "year_of_course" : 2021, "score" : 97, "town" : "Kannur" }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522a"), "roll" : 4, "name" : "Emi", "phoneno" : "8080923354", "year_of_course" : 2021, "score" : 98, "town" : "Thrissur" }
+{ "_id" : ObjectId("68185fb5f5589ca27ca2522b"), "roll" : 5, "name" : "Abel", "phoneno" : "6678540987", "year_of_course" : 2021, "score" : 79, "town" : "Ekm" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
